@@ -143,9 +143,14 @@ class PracticalTest01Var07MainActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
-        if (savedInstanceState.containsKey("sum"))
+        if (savedInstanceState.containsKey("sum")) {
             sum = savedInstanceState.getFloat("sum")
-        if (savedInstanceState.containsKey("prod"))
+            Toast.makeText(this, "sum: $sum", Toast.LENGTH_SHORT).show()
+        }
+
+        if (savedInstanceState.containsKey("prod")) {
             prod = savedInstanceState.getFloat("prod")
+            Toast.makeText(this, "prod: $prod", Toast.LENGTH_SHORT).show()
+        }
     }
 }
