@@ -29,6 +29,9 @@ class PracticalTest01Var07MainActivity : AppCompatActivity() {
     private var a3 : Float = 0.0F
     private var a4 : Float = 0.0F
 
+    private var sum : Float = 0.0F
+    private var prod : Float = 0.0F
+
     fun getRandom() : Float {
         var a : Int = (1..100).random()
         var b : Int = (1..100).random()
@@ -37,10 +40,10 @@ class PracticalTest01Var07MainActivity : AppCompatActivity() {
 
     private val activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
-            var sum = result.data?.getFloatExtra("sum", 0.0F) ?: 0.0F
+            sum = result.data?.getFloatExtra("sum", 0.0F) ?: 0.0F
             Toast.makeText(this, "sum: $sum", Toast.LENGTH_SHORT).show()
         } else if (result.resultCode == RESULT_CANCELED) {
-            var prod = result.data?.getFloatExtra("prod", 0.0F) ?: 0.0F
+            prod = result.data?.getFloatExtra("prod", 0.0F) ?: 0.0F
             Toast.makeText(this, "prod: $prod", Toast.LENGTH_SHORT).show()
         }
     }
@@ -128,5 +131,21 @@ class PracticalTest01Var07MainActivity : AppCompatActivity() {
     override fun onPause() {
         unregisterReceiver(messageBroadcastReceiver)
         super.onPause()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putFloat("sum", sum)
+        outState.putFloat("prod", prod)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        if (savedInstanceState.containsKey("sum"))
+            sum = savedInstanceState.getFloat("sum")
+        if (savedInstanceState.containsKey("prod"))
+            prod = savedInstanceState.getFloat("prod")
     }
 }
