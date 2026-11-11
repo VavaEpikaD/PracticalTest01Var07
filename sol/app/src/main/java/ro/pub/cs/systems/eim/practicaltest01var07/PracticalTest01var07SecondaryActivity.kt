@@ -1,5 +1,6 @@
 package ro.pub.cs.systems.eim.practicaltest01var07
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -54,7 +55,16 @@ class PracticalTest01var07SecondaryActivity : AppCompatActivity() {
                 a4 = intent.getFloatExtra("a4", 0.0F)
                 textView4.text = a4.toString()
             }
+        }
 
+        sumButton.setOnClickListener {
+            setResult(RESULT_OK, Intent().putExtra("sum", a1 + a2 + a3 + a4))
+            finish()
+        }
+
+        productButton.setOnClickListener {
+            setResult(RESULT_CANCELED, Intent().putExtra("prod", a1 * a2 * a3 * a4))
+            finish()
         }
     }
 }

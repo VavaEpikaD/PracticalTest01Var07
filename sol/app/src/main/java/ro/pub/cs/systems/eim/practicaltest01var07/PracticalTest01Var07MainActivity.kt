@@ -1,7 +1,12 @@
 package ro.pub.cs.systems.eim.practicaltest01var07
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -32,9 +37,11 @@ class PracticalTest01Var07MainActivity : AppCompatActivity() {
 
     private val activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
-            Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show()
+            var sum = result.data?.getFloatExtra("sum", 0.0F) ?: 0.0F
+            Toast.makeText(this, "sum: $sum", Toast.LENGTH_SHORT).show()
         } else if (result.resultCode == RESULT_CANCELED) {
-            Toast.makeText(this, "CANCEL", Toast.LENGTH_SHORT).show()
+            var prod = result.data?.getFloatExtra("prod", 0.0F) ?: 0.0F
+            Toast.makeText(this, "prod: $prod", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -82,5 +89,44 @@ class PracticalTest01Var07MainActivity : AppCompatActivity() {
             intent.putExtra("a4", a4)
             activityResultLauncher.launch(intent)
         }
+
+        val intent = Intent(this, PracticalTest01Var07Service::class.java)
+        startService(intent)
+    }
+
+
+    private val messageBroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            var s = intent?.getStringExtra("message") ?: "Empty"
+            Log.d("string", s)
+            var arr = s.split(" ")
+            a1 = arr[0].toFloat()
+            a2 = arr[1].toFloat()
+            a3 = arr[2].toFloat()
+            a4 = arr[3].toFloat()
+            Log.d("nums", a1.toString())
+            editText1.setText(a1.toString())
+            editText2.setText(a2.toString())
+            editText3.setText(a3.toString())
+            editText4.setText(a4.toString())
+        }
+    }
+
+    private val intentFilter = IntentFilter().apply {
+        addAction("action1")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(messageBroadcastReceiver, intentFilter, RECEIVER_EXPORTED)
+        } else {
+            registerReceiver(messageBroadcastReceiver, intentFilter)
+        }
+    }
+
+    override fun onPause() {
+        unregisterReceiver(messageBroadcastReceiver)
+        super.onPause()
     }
 }
