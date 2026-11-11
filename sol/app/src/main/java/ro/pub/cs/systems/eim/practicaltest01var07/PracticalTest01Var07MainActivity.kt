@@ -56,15 +56,22 @@ class PracticalTest01Var07MainActivity : AppCompatActivity() {
         randomButton = findViewById(R.id.randomButton)
 
         randomButton.setOnClickListener {
-            if (editText1.text.toString() == "" || editText1.text.toString().)
-            a1 = getRandom()
-            a2 = getRandom()
-            a3 = getRandom()
-            a4 = getRandom()
-            editText1.setText(a1.toString())
-            editText2.setText(a2.toString())
-            editText3.setText(a3.toString())
-            editText4.setText(a4.toString())
+            if (editText1.text.toString() == "" || editText1.text.toString().toFloatOrNull() == null) {
+                a1 = getRandom()
+                editText1.setText(a1.toString())
+            }
+            if (editText2.text.toString() == "" || editText2.text.toString().toFloatOrNull() == null) {
+                a2 = getRandom()
+                editText2.setText(a2.toString())
+            }
+            if (editText3.text.toString() == "" || editText3.text.toString().toFloatOrNull() == null) {
+                a3 = getRandom()
+                editText3.setText(a3.toString())
+            }
+            if (editText4.text.toString() == "" || editText4.text.toString().toFloatOrNull() == null) {
+                a4 = getRandom()
+                editText4.setText(a4.toString())
+            }
         }
 
         setButton.setOnClickListener {

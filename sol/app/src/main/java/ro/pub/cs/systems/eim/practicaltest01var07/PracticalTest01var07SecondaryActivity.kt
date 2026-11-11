@@ -37,7 +37,7 @@ class PracticalTest01var07SecondaryActivity : AppCompatActivity() {
         sumButton = findViewById(R.id.sumButton)
         productButton = findViewById(R.id.productButton)
 
-        if (intent != null)
+        if (intent != null) {
             if (intent.hasExtra("a1")) {
                 a1 = intent.getFloatExtra("a1", 0.0F)
                 textView1.text = a1.toString()
